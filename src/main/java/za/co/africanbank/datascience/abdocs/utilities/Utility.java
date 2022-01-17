@@ -9,6 +9,5 @@ public class Utility {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");  
 		String formatDateTime = now.format(format); 
 		return formatDateTime;
-
 	}
 }

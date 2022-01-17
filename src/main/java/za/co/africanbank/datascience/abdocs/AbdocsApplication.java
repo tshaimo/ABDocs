@@ -12,8 +12,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan(basePackages = "za.co.africanbank.datascience.abdocs.entities")
 public class AbdocsApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AbdocsApplication.class, args);
+	public static void main(String[] arguments) {
+		SpringApplication.run(AbdocsApplication.class, arguments);
 	}
 	
 	
