@@ -24,8 +24,8 @@ services:
     environment: 
       - SITE=${SITE}
       - SERVICE=document
-      - LOGSTASH_URL= http://10.30.120.111:32167/
-      - ELASTICSEARCH_URL=http://elastic.elk-prod.10.30.120.111.196.xip.io:80
+      - LOGSTASH_URL= http://mdlcold1:32167/
+      - ELASTICSEARCH_URL=http://elastic.elk-dev.mdlcold1.xip.io:80
       - SYSTEM=abdocs
       - ENVIRONMENT=${ENV}
     logging:
