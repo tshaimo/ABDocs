@@ -1,0 +1,9 @@
+variables:
+  IMAGE_NAME: ab-documents-service
+  SERVICE_NAME: abdocs
+
+include:
+  - project: 'javacredit/abdocs'
+    ref: master
+    file: '/javacredit/microservices-springboot/.gitlab-ci.yml'
+    

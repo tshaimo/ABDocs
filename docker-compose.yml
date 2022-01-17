@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  ab-document:
+    image: docker-virtual.artifactory.dev.africanbank.net:80/${DOCKER_REGISTRY}/ab-document-service:${VERSION}
+    deploy:
+      replicas: ${REPLICAS}
+      endpoint_mode: dnsrr
+      rollback_config:
+        parallelism: 1
+        delay: 10s
+        order: stop-first
+      resources:
+        limits:
+          cpus: ${RESOURCES_LIMITS_CPUS}
+          memory: ${RESOURCES_LIMITS_MEMORY}
+      placement:
+        constraints:
+          - ${PLACEMENT_CONSTRAINTS_NODE_ROLE}
+    networks:
+      o-net:
+        aliases:
+          - document
+    environment: 
+      - SITE=${SITE}
+      - SERVICE=document
+      - LOGSTASH_URL= http://10.30.120.111:32167/
+      - ELASTICSEARCH_URL=http://elastic.elk-prod.10.30.120.111.196.xip.io:80
+      - SYSTEM=abdocs
+      - ENVIRONMENT=${ENV}
+    logging:
+      driver: json-file
+    secrets:
+      - source: documentkeystore
+      - source: application.properties
+        target: application.properties
+    configs:
+      - source: document_service.http.conf
+        target: /etc/nginx/conf.d/service.http.conf
+      - source: document_service.stream.conf
+        target: /etc/nginx/conf.d/service.stream.conf
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/abdocs/health-check"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 180s
+
+networks:
+  o-net:
+    external: true
+    name: o-net
+secrets:
+  documentkeystore:
+    name: ab_$SERVICE_keystore_$TIMESTAMP
+    external: true 
+  document_application.properties:
+    name: ab_$SERVICE_application.properties_$TIMESTAMP
+    external: true
+configs: 
+  document_service.http.conf:
+    name: ab_$SERVICE_service.http.conf_$TIMESTAMP
+    external: true
+  document_service.stream.conf:
+    name: ab_$SERVICE_service.stream.conf_$TIMESTAMP
+    external: true
