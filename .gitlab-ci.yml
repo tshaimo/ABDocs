@@ -3,7 +3,8 @@ variables:
   SERVICE_NAME: abdocs
 
 include:
-  - project: 'javacredit/abdocs'
+  - project: 'abdocsgroup/boilerplates'
     ref: master
-    file: '/javacredit/microservices-springboot/.gitlab-ci.yml'
+    file: 'microservices-springboot/.gitlab-ci.yml'
+
     

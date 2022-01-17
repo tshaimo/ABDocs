@@ -17,6 +17,18 @@
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
+	<distributionManagement>
+		<repository>
+			<id>central</id>
+			<name>maven-virtual</name>
+			<url>http://artifactory.dev.africanbank.net:80/maven-virtual</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>maven-virtual</name>
+			<url>http://artifactory.dev.africanbank.net:80/maven-virtual</url>
+		</snapshotRepository>
+	</distributionManagement>	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
