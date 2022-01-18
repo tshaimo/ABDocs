@@ -8,6 +8,7 @@ class AbdocsApplicationTests {
 
 	@Test
 	void contextLoads() {
+		//test logic
 	}
 
 }
