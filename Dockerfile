@@ -1,4 +1,4 @@
-FROM openjdk:8u111-jdk-alpine
+FROM docker-virtual.artifactory.dev.africanbank.net:80/openjdk:8u111-jdk-alpine
 VOLUME /tmp
 
 ARG VERSION
