@@ -1,5 +1,5 @@
 variables:
-  IMAGE_NAME: ab-documents-service
+  IMAGE_NAME: collections-java-service
   SERVICE_NAME: abdocs
 
 include:
