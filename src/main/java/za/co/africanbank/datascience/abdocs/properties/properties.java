@@ -14,7 +14,7 @@ public class properties {
 	public String read(String propertyName) throws IOException{
 		try {
 			Properties properties = new Properties();		
-			InputStream inputStream = new FileInputStream("C:/ABDocs_Config/conf/ABDocs.properties");
+			InputStream inputStream = new FileInputStream("/tmp/config/ABDocs.properties");
 			properties.load(inputStream);			
 			return properties.get(propertyName).toString();
 		} catch (FileNotFoundException e) {
