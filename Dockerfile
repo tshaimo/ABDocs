@@ -1,6 +1,6 @@
 FROM docker-virtual.artifactory.dev.africanbank.net:80/openjdk:8u111-jdk-alpine
 VOLUME /tmp
-VOLUME /tmp/config
+#VOLUME /tmp/config
 COPY config/ABDocs.properties /tmp/config
 #EXPOSE 8080 80 443 8443 22
 ARG VERSION
