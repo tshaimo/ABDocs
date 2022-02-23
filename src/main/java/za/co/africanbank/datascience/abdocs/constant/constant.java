@@ -2,7 +2,7 @@ package za.co.africanbank.datascience.abdocs.constant;
 
 public enum constant {
 
-	PROPERTYFILE("C:/ABDocs_Config/conf/ABDocs.properties"),
+	PROPERTYFILE("/tmp/config/ABDocs.properties"),
 	SMSPREFIX("<exp:RequestDocument xmlns:exp=\"http://exposeservice.documentservice.abil/\">"),
 	SMSSUFFIX("</exp:RequestDocument>"),
 	GREATERTHANHTML("&gt;"), 
