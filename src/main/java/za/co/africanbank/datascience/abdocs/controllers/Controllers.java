@@ -234,10 +234,10 @@ public class Controllers {
 		for(ABDocs_Documents document : AllDocList) {
 			System.out.println(document.getCategory());
 			File fil=null;
-			System.out.println(path +"\\"+ document.getCategory()+".pdf");
-			fil = new File(path +"\\"+ document.getCategory()+".pdf");
+			System.out.println(path +"//"+ document.getCategory()+".pdf");
+			fil = new File(path +"//"+ document.getCategory()+".pdf");
 			for (int i = 1; fil.exists(); i++) {
-				fil = new File(path +"\\"+ document.getCategory()+"_"+i+".pdf");
+				fil = new File(path +"//"+ document.getCategory()+"_"+i+".pdf");
 			}
 			response.setContentType("application/pdf");
 			response.setHeader("Cache-control", "private, max-age=0");
@@ -277,7 +277,8 @@ public class Controllers {
 		//redirAttrs.addFlashAttribute("Email",mai.getFromAddress());
 		model.addAttribute("Role",user.getUserDetail(request.getRemoteUser()).getRole());
 		model.addAttribute("FullNames",user.getUserDetail(request.getRemoteUser()).getFullNames());
-		redirAttrs.addFlashAttribute("path",path.replace("P:", "\\\\Neptune\\directdoc$")); 
+		//redirAttrs.addFlashAttribute("path",path.replace("P:", "\\\\Neptune\\directdoc$")); 
+		redirAttrs.addFlashAttribute("path","/tmp/files");
 		return "redirect:/WrapUp";
 
 
