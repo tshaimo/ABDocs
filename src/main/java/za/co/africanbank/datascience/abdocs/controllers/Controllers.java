@@ -50,6 +50,7 @@ import za.co.africanbank.datascience.abdocs.repositories.ABDocsUsersRepository;
 import za.co.africanbank.datascience.abdocs.repositories.CountRepository;
 import za.co.africanbank.datascience.abdocs.repositories.TotalRepository;
 import za.co.africanbank.datascience.abdocs.utilities.Utility;
+import org.springframework.beans.factory.annotation.Value;
 
 
 @Controller
@@ -80,6 +81,8 @@ public class Controllers {
 	ABDocsCommentsRepository comments;
 	private Set<String> sessionIds = Collections.synchronizedSet(new HashSet<>());
 	int count =0;
+	@Value("${neptune.location}")
+    private String neptune;
 
 
 
@@ -225,7 +228,8 @@ public class Controllers {
 	@PostMapping("/NeptuneUpload")
 	public String NeptuneUpload(Model model,HttpServletRequest request,HttpServletResponse response,@RequestParam(name="IDNumber",required =false)String IDNumber,@RequestParam(name="UUID",required =false)String UUID,RedirectAttributes redirAttrs,@RequestParam(name="Wrapcode",required =false)String Wrapcode) throws IOException {
 		//ABDocs_Emails mai;
-		String path = new properties(constant.PROPERTYFILE.value()).read("NeptuneDownload") + request.getRemoteUser() + "\\";
+		String path = neptune + request.getRemoteUser() + "\\";
+		//String path = new properties(constant.PROPERTYFILE.value()).read("NeptuneDownload") + request.getRemoteUser() + "\\";
 		path = path + IDNumber;
 		File file = new File(path);
 		file.mkdirs();
