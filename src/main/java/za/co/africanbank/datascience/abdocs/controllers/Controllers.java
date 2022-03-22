@@ -228,7 +228,7 @@ public class Controllers {
 	@PostMapping("/NeptuneUpload")
 	public String NeptuneUpload(Model model,HttpServletRequest request,HttpServletResponse response,@RequestParam(name="IDNumber",required =false)String IDNumber,@RequestParam(name="UUID",required =false)String UUID,RedirectAttributes redirAttrs,@RequestParam(name="Wrapcode",required =false)String Wrapcode) throws IOException {
 		//ABDocs_Emails mai;
-		String path = neptune + request.getRemoteUser() + "\\";
+		String path = neptune + request.getRemoteUser() + "//";
 		//String path = new properties(constant.PROPERTYFILE.value()).read("NeptuneDownload") + request.getRemoteUser() + "\\";
 		path = path + IDNumber;
 		File file = new File(path);
