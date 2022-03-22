@@ -239,9 +239,10 @@ public class Controllers {
 			System.out.println(document.getCategory());
 			File fil=null;
 			System.out.println(path +"/"+ document.getCategory()+".pdf");
-			fil = new File(path +"/"+ document.getCategory()+".pdf");
+			//fil = new File(path +"/"+ document.getCategory()+".pdf");
+			fil = new File(file, document.getCategory()+".pdf");
 			for (int i = 1; fil.exists(); i++) {
-				fil = new File(path +"/"+ document.getCategory()+"_"+i+".pdf");
+				fil = new File(file, document.getCategory()+"_"+i+".pdf");
 			}
 			response.setContentType("application/pdf");
 			response.setHeader("Cache-control", "private, max-age=0");
