@@ -228,7 +228,7 @@ public class Controllers {
 	@PostMapping("/NeptuneUpload")
 	public String NeptuneUpload(Model model,HttpServletRequest request,HttpServletResponse response,@RequestParam(name="IDNumber",required =false)String IDNumber,@RequestParam(name="UUID",required =false)String UUID,RedirectAttributes redirAttrs,@RequestParam(name="Wrapcode",required =false)String Wrapcode) throws IOException {
 		//ABDocs_Emails mai;
-		String path = neptune + request.getRemoteUser() + "//";
+		String path = neptune + request.getRemoteUser() + "/";
 		//String path = new properties(constant.PROPERTYFILE.value()).read("NeptuneDownload") + request.getRemoteUser() + "\\";
 		path = path + IDNumber;
 		File file = new File(path);
@@ -238,10 +238,10 @@ public class Controllers {
 		for(ABDocs_Documents document : AllDocList) {
 			System.out.println(document.getCategory());
 			File fil=null;
-			System.out.println(path +"//"+ document.getCategory()+".pdf");
-			fil = new File(path +"//"+ document.getCategory()+".pdf");
+			System.out.println(path +"/"+ document.getCategory()+".pdf");
+			fil = new File(path +"/"+ document.getCategory()+".pdf");
 			for (int i = 1; fil.exists(); i++) {
-				fil = new File(path +"//"+ document.getCategory()+"_"+i+".pdf");
+				fil = new File(path +"/"+ document.getCategory()+"_"+i+".pdf");
 			}
 			response.setContentType("application/pdf");
 			response.setHeader("Cache-control", "private, max-age=0");
