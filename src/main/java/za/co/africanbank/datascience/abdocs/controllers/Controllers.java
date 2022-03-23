@@ -283,7 +283,7 @@ public class Controllers {
 		//redirAttrs.addFlashAttribute("Email",mai.getFromAddress());
 		model.addAttribute("Role",user.getUserDetail(request.getRemoteUser()).getRole());
 		model.addAttribute("FullNames",user.getUserDetail(request.getRemoteUser()).getFullNames());
-		redirAttrs.addFlashAttribute("path",path.replace("/tmp/files", "\\\\Neptune\\directdoc$"));
+		redirAttrs.addFlashAttribute("path",path.replace("/tmp/files", "\\\\Neptune\\directdoc").replace("/","\\"));
 		return "redirect:/WrapUp";
 
 
