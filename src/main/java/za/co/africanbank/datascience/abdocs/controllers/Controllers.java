@@ -241,7 +241,7 @@ public class Controllers {
 			File fil=null;
 			System.out.println(path +"/"+ document.getCategory()+".pdf");
 			fil = new File(path +"/"+ document.getCategory()+".pdf");
-			//fil = new File(file, document.getCategory()+".pdf");
+			//fil = new File(,file document.getCategory()+".pdf");
 			for (int i = 1; fil.exists(); i++) {
 				fil = new File(path +"/"+ document.getCategory()+"_"+i+".pdf");
 			}
@@ -283,7 +283,7 @@ public class Controllers {
 		//redirAttrs.addFlashAttribute("Email",mai.getFromAddress());
 		model.addAttribute("Role",user.getUserDetail(request.getRemoteUser()).getRole());
 		model.addAttribute("FullNames",user.getUserDetail(request.getRemoteUser()).getFullNames());
-		redirAttrs.addFlashAttribute("path",path.replace("/tmp/files", "\\\\Neptune\\directdoc").replace("/","\\"));
+		redirAttrs.addFlashAttribute("path",path.replace("/tmp/files", "\\\\Neptune\\directdoc$").replace("/","\\"));
 		return "redirect:/WrapUp";
 
 
