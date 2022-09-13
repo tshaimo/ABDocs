@@ -78,7 +78,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 			SearchResult result = null;
 			String name ="";
-			
+			logger.info("Attempting Login");
 			while (users.hasMore() && ctx !=null) {
 
 				result = (SearchResult) users.next();

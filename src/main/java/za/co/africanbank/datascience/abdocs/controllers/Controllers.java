@@ -153,7 +153,7 @@ public class Controllers {
 
 
 	@GetMapping("/WrapUp")
-	public String WrapUp(Model model,HttpServletRequest request,HttpServletResponse response,@RequestParam(name="IDNumber",required =false)String IDNumber,@RequestParam(name="UUID",required =false)String UUID,RedirectAttributes redirAttrs,@RequestParam(name="Wrapcode",required =false)String Wrapcode,@RequestParam(name="Email",required =false)String Email,@RequestParam(name="Reply",required =false)String Reply) throws InterruptedException {
+	public String WrapUp(Model model,HttpServletRequest request,HttpServletResponse response,@RequestParam(name="Assistance",required=false)String Assistance,@RequestParam(name="IDNumber",required =false)String IDNumber,@RequestParam(name="UUID",required =false)String UUID,RedirectAttributes redirAttrs,@RequestParam(name="Wrapcode",required =false)String Wrapcode,@RequestParam(name="Email",required =false)String Email,@RequestParam(name="Reply",required =false)String Reply) throws InterruptedException {
 
 
 		if(Reply !=null && Reply !="") {
@@ -173,7 +173,12 @@ public class Controllers {
 		List<ABDocs_Logging> log = logging.findByEmail_UUID(UUID);
 		mai= mail.findById(UUID).get();
 
-
+        if(Assistance !=null && Assistance !="") {
+        	mai.setAssistanceRequired("1");
+        }
+        if(Assistance=="" || Assistance==null) {
+        	mai.setAssistanceRequired("0");
+        }
 		if(Wrapcode !=null && Wrapcode !=""){
 
 			for(ABDocs_Logging logg : log) {

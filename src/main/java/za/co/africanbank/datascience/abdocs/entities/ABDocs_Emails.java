@@ -41,11 +41,27 @@ public class ABDocs_Emails {
 	private String Username;
 	@Column(name="Wrapupcode")
 	private String WrapUpCode;
+	@Column(name="Assistancerequired")
+	private String AssistanceRequired;
 
-
+    
 	public ABDocs_Emails() {
 		
 	}
+	
+	
+
+	public String getAssistanceRequired() {
+		return AssistanceRequired;
+	}
+
+
+
+	public void setAssistanceRequired(String assistanceRequired) {
+		AssistanceRequired = assistanceRequired;
+	}
+
+
 
 	public String getIDNumber() {
 		return IDNumber;
