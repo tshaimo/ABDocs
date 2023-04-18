@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DART</title>
+<link rel="shortcut icon" th:href="@{/dist/img/mid1.png}" />
+
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<link rel="stylesheet"
+	th:href="@{../../plugins/datatables-bs4/css/dataTables.bootstrap4.css}">
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+
+<!-- icheck bootstrap -->
+<link rel="stylesheet"
+	th:href="@{/plugins/icheck-bootstrap/icheck-bootstrap.min.css}">
+<!-- Theme style -->
+<link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
+<link rel="stylesheet"
+	th:href="@{../../plugins/select2/css/select2.min.css}">
+<link rel="stylesheet"
+	th:href="@{../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css}">
+
+
+<style>
+.btnLink {
+	cursor: pointer;
+	background-color: transparent;
+	color: #88bc47;
+	border: none;
+	outline: none;
+}
+</style>
+</head>
+<body class="hold-transition sidebar-mini" onload="StartTimers();"
+	onmousemove="ResetTimers();">
+
+	<div class="wrapper">
+		<!-- Navbar -->
+		<nav
+			class="main-header navbar navbar-expand navbar-white navbar-light">
+			<!-- Left navbar links -->
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" data-widget="pushmenu"
+					href="#" role="button"><i class="fas fa-bars"></i></a></li>
+				<li class="nav-item d-none d-sm-inline-block"><a
+					th:href="@{/}" class="nav-link">Home</a></li>
+				<li class="nav-item d-none d-sm-inline-block"><a
+					th:href="@{/Dashboard}" class="nav-link">Dashboard</a></li>
+			</ul>
+
+			<!-- Right navbar links -->
+			<ul class="navbar-nav ml-auto">
+				
+				<!-- Notifications Dropdown Menu -->
+				<li class="nav-item dropdown"><a class="nav-link"
+					data-toggle="dropdown" href="#"> <i
+						class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> <span
+						class=""></span>
+				</a>
+					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+						<button class="dropdown-item" data-target=".bs-home-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Gone Home
+						</button>
+						<button class="dropdown-item" data-target=".bs-break-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Tea Break
+						</button>
+						<button class="dropdown-item" data-target=".bs-lunch-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Lunch
+						</button>
+						<button class="dropdown-item" data-target=".bs-bathroom-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Bathroom
+						</button>
+						<button class="dropdown-item" data-target=".bs-meeting-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Meeting
+						</button>
+						<button class="dropdown-item" data-target=".bs-training-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Training
+						</button>
+						<button class="dropdown-item" data-target=".bs-vacation-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Vacation
+						</button>
+						<button class="dropdown-item" data-target=".bs-coaching-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Coaching
+						</button>
+						<button class="dropdown-item" data-target=".bs-example-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Logout
+						</button>
+
+					</div>
+				</li>
+
+				<li class="nav-item"><a class="nav-link"
+					data-widget="fullscreen" href="#" role="button"> <i
+						class="fas fa-expand-arrows-alt"></i>
+				</a></li>
+
+
+			</ul>
+		</nav>
+		<!-- /.navbar -->
+
+		<!-- Main Sidebar Container -->
+		<aside class="main-sidebar sidebar-dark-primary elevation-4">
+			<!-- Brand Logo -->
+			<a th:href="@{/}" class="brand-link"> <img
+				src="dist/img/mid.png" alt=""
+				class="brand-image img-circle elevation-3" style="opacity: .8">
+				<span class="brand-text font-weight-light">African Bank</span>
+			</a>
+
+			<!-- Sidebar -->
+			<div class="sidebar">
+				<!-- Sidebar user (optional) -->
+				<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+					<div class="image">
+						<img src="" class="img-circle elevation-2" alt="">
+					</div>
+					<div class="info">
+						<a href="#" class="d-block" th:text="${FullNames}"></a>
+					</div>
+				</div>
+
+				<!-- SidebarSearch Form -->
+				<!-- Sidebar Menu -->
+				<nav class="mt-2">
+					<ul class="nav nav-pills nav-sidebar flex-column"
+						data-widget="treeview" role="menu" data-accordion="false">
+						<li class="nav-item menu-open">
+							<a href="#" class="nav-link active"> 
+								<i class="nav-icon far fa-envelope"></i>
+								<p>
+									Mailbox <i class=""></i>
+								</p>
+							</a>
+						</li>
+
+					</ul>
+				</nav>
+				<!-- /.sidebar-menu -->
+			</div>
+			<!-- /.sidebar -->
+		</aside>
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1>Inbox</h1>
+						</div>
+						<div class="col-sm-6">
+
+
+							<div class="alert alert-success alert-dismissible" id="success"
+								th:if="${complete}">
+								<button type="button" class="close" data-dismiss="alert"
+									id="button" aria-hidden="true">&times;</button>
+								<h5>
+									<i class="icon fas fa-check"></i> Success!
+								</h5>
+								All Information Successfully Submitted
+								<p th:text="${IDNumber}"></p>
+							</div>
+
+					
+
+							<div class="alert alert-success alert-dismissible" id="success"
+								th:if="${MailAssigned}">
+								<button type="button" class="close" data-dismiss="alert"
+									id="button" aria-hidden="true">&times;</button>
+								<h5>
+									<i class="icon fas fa-check"></i> Success!
+								</h5>
+								<p>
+									Mail for <span th:text="${IDNumber}"></span> was Successfully
+									Reassigned
+								</P>
+							</div>
+							<div class="alert alert-warning alert-dismissible"
+								style="background-color: #ffc107" th:if="${Assigned}">
+								<button type="button" class="close" data-dismiss="alert"
+									aria-hidden="true">&times;</button>
+								<h5>
+									<i class="icon fas fa-exclamation-triangle"></i> Alert!
+								</h5>
+								<p>
+									Email already assigned to <span th:text="${Userbusy}"></span>
+								<p>
+							</div>
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="">Home</a></li>
+								<li class="breadcrumb-item active">Inbox</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="row">
+					<div class="col-md-3">
+						<!--<a href="compose.html" class="btn btn-primary btn-block mb-3">Compose</a>-->
+
+						<div class="card">
+							<div class="card-header">
+								<h3 class="card-title">Please select workflow</h3>
+
+								<div class="card-tools">
+									<button type="button" class="btn btn-tool"
+										data-card-widget="collapse">
+										<i class="fas fa-minus"></i>
+									</button>
+								</div>
+							</div>
+							<div class="card-body p-0">
+								<ul class="nav nav-pills flex-column">
+									<li class="nav-item active">
+										<a th:href="@{/?first=Dailer}"
+											class="nav-link"> <i class="fas fa-inbox"></i> Dailer </span>
+										</a>
+									</li>
+									<li class="nav-item active">
+										<a th:href="@{/ReadDistinc?first=Available}"
+											class="nav-link"> <i class="fas fa-inbox"></i> Available </span>
+										</a>
+									</li>
+								</ul>
+							</div>
+							<!-- /.card-body -->
+						</div>
+					</div>
+				</div>
+				<!-- /.row -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+		<footer class="main-footer">
+			<div class="float-right d-none d-sm-block">
+				<b></b>
+			</div>
+			<p>Copyright &copy; 2021 African Bank. An authorized financial
+				services and credit provider Reg No. 2014/176899/06 (NCRCP7638)</p>
+		</footer>
+
+		<!-- Control Sidebar -->
+		<aside class="control-sidebar control-sidebar-dark">
+			<!-- Control sidebar content goes here -->
+		</aside>
+		<!-- /.control-sidebar -->
+	</div>
+	<!-- ./wrapper -->
+	<div id="myModal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Session About To Timeout</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p>
+						<span id="Timer"></span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-home-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Home <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/home}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go home?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-break-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Break <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/break}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						take a tea break?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-lunch-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Lunch <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/lunch}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go on lunch?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-bathroom-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Bathroom <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/bathroom}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go to the bathroom?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-meeting-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Meeting <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/meeting}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go to a meeting?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-training-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Training <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/training}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go on training?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-vacation-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Vacation <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/vacation}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go on vacation?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-coaching-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Coaching <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/coaching}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go for coaching?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-example-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Logout <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						log-out?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div tabindex="-1" class="modal bs-example-modal-sm2" role="dialog">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Profile <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/Workflow}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Please choose a Workflow
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Submit</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script th:src="@{../../plugins/jquery/jquery.min.js}"></script>
+	<!-- Bootstrap 4 -->
+	<script th:src="@{../../plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<!-- AdminLTE App -->
+	<script th:src="@{../../dist/js/adminlte.min.js}"></script>
+	<!-- AdminLTE for demo purposes -->
+	<script th:src="@{../../dist/js/demo.js}"></script>
+	<script th:src="@{../../plugins/sweetalert2/sweetalert2.min.js}"></script>
+	<!-- Toastr -->
+	<script th:src="@{../../plugins/toastr/toastr.min.js}"></script>
+	<script th:src="@{../../plugins/datatables/jquery.dataTables.js}"></script>
+	<script
+		th:src="@{../../plugins/datatables-bs4/js/dataTables.bootstrap4.js}"></script>
+
+	<script>
+$(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+</script>
+	<!-- Page specific script -->
+	<script>
+  $(function () {
+    //Enable check and uncheck all functionality
+    $('.checkbox-toggle').click(function () {
+      var clicks = $(this).data('clicks')
+      if (clicks) {
+        //Uncheck all checkboxes
+        $('.mailbox-messages input[type=\'checkbox\']').prop('checked', false)
+        $('.checkbox-toggle .far.fa-check-square').removeClass('fa-check-square').addClass('fa-square')
+      } else {
+        //Check all checkboxes
+        $('.mailbox-messages input[type=\'checkbox\']').prop('checked', true)
+        $('.checkbox-toggle .far.fa-square').removeClass('fa-square').addClass('fa-check-square')
+      }
+      $(this).data('clicks', !clicks)
+    })
+
+    //Handle starring for font awesome
+    $('.mailbox-star').click(function (e) {
+      e.preventDefault()
+      //detect type
+      var $this = $(this).find('a > i')
+      var fa    = $this.hasClass('fa')
+
+      //Switch states
+      if (fa) {
+        $this.toggleClass('fa-star')
+        $this.toggleClass('fa-star-o')
+      }
+    })
+  })
+</script>
+	<script>
+var button = document.getElementById('button'); // Assumes element with id='button'
+
+button.onclick = function() {
+    var div = document.getElementById('success');
+    if (div.style.display !== 'none') {
+        div.style.display = 'none';
+    }
+    else {
+        div.style.display = 'block';
+    }
+};
+</script>
+	<script type="text/JavaScript">
+       
+            function AutoRefresh( t ) {
+               setTimeout("location.reload(true);", t);
+            }
+        
+</script>
+<script>
+  $(function () {
+    $("#example1").DataTable();
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+    });
+  });
+</script>
+	<script>
+
+//Set timeout variables.
+var timoutWarning = 840000; // Display warning in 14 Mins.
+var timoutNow = 900000; // Timeout in 15 mins.
+var logoutUrl = '/'; // URL to logout page.
+var elem = document.getElementById('Timer');
+var warningTimer;
+var timeoutTimer;
+var timeLeft = 59;
+var timerId;
+
+
+// Start timers.
+function StartTimers() {
+    warningTimer = setTimeout("IdleWarning()", timoutWarning);
+    timeoutTimer = setTimeout("IdleTimeout()", timoutNow);
+}
+
+// Reset timers.
+function ResetTimers() {
+    clearTimeout(warningTimer);
+    clearTimeout(timeoutTimer);
+    $("#myModal").modal('hide');
+    clearInterval(timerId);
+    StartTimers();
+    elem.innerHTML = "";
+    timeLeft=59;
+}
+
+// Show idle timeout warning dialog.
+function IdleWarning() {
+	timerId =  setInterval(countdown, 1000);
+	$("#myModal").modal('show');
+}
+
+
+function countdown() {	
+	  if (timeLeft == 0) {
+	    //clearTimeout(timerId);
+	    doSomething();
+	  } else {
+	    elem.innerHTML = 'You have '+timeLeft + ' Seconds remaining';
+	    timeLeft--;
+	  }
+}
+
+// Logout the user.
+function IdleTimeout() {
+    window.location = logoutUrl;
+}
+</script>
+
+<script type="text/javascript">
+    window.history.forward();
+    function noBack() {
+        window.history.forward();
+    }
+</script>
+
+</body>
+</html>
