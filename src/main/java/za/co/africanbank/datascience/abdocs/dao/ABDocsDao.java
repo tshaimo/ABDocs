@@ -1,6 +1,9 @@
 package za.co.africanbank.datascience.abdocs.dao;
 import java.util.List;
 import java.util.UUID;
+
+import javax.persistence.Column;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import za.co.africanbank.datascience.abdocs.dto.Attachment;
@@ -9,14 +12,18 @@ import za.co.africanbank.datascience.abdocs.entities.ABDocs_Comments;
 import za.co.africanbank.datascience.abdocs.entities.ABDocs_Documents;
 import za.co.africanbank.datascience.abdocs.entities.ABDocs_Emails;
 import za.co.africanbank.datascience.abdocs.entities.ABDocs_Links;
+import za.co.africanbank.datascience.abdocs.entities.ABDocs_UserStatus;
 import za.co.africanbank.datascience.abdocs.entities.ABDocs_Users;
 import za.co.africanbank.datascience.abdocs.entities.ABDocs_UsersActivity;
+import za.co.africanbank.datascience.abdocs.entities.StatusLogs;
 import za.co.africanbank.datascience.abdocs.repositories.ABDocsCommentsRepository;
 import za.co.africanbank.datascience.abdocs.repositories.ABDocsDocumentsRepository;
 import za.co.africanbank.datascience.abdocs.repositories.ABDocsEmailsRepository;
 import za.co.africanbank.datascience.abdocs.repositories.ABDocsLinksRepository;
 import za.co.africanbank.datascience.abdocs.repositories.ABDocsUsersActivityRepository;
 import za.co.africanbank.datascience.abdocs.repositories.ABDocsUsersRepository;
+import za.co.africanbank.datascience.abdocs.repositories.UserStatusRepository;
+import za.co.africanbank.datascience.abdocs.repositories.StatusLogsRepository;
 import za.co.africanbank.datascience.abdocs.utilities.Utility;
 
 @Component
@@ -34,6 +41,10 @@ public class ABDocsDao {
 	private ABDocsCommentsRepository comment;
     @Autowired
 	ABDocsUsersActivityRepository activity;
+    @Autowired
+	private UserStatusRepository status;
+    @Autowired
+	private StatusLogsRepository slog;
     
     public void saveUserActivity(String Username) {
     	ABDocs_UsersActivity act = new ABDocs_UsersActivity();
@@ -136,6 +147,32 @@ public class ABDocsDao {
 		}
 	}
 
-
-
+	public void saveUserStatus(String Username, String Stts) {
+		ABDocs_UserStatus ustatus = status.getStatusByUsername(Username);
+		if (ustatus != null) {
+			ustatus.setStatus(Stts);
+			ustatus.setSQLUpdateDate(new Utility().getCreationDate());
+			status.save(ustatus);
+		} else {
+			ustatus = new ABDocs_UserStatus();
+			ustatus.setUsername(Username);
+			ustatus.setFullNames(users.getUserDetail(Username).getFullNames());
+			ustatus.setRole(users.getUserDetail(Username).getRole());
+			ustatus.setStatus(Stts);
+			ustatus.setSQLUpdateDate(new Utility().getCreationDate());
+			status.save(ustatus);
+		}
+		saveStatusLogs(Username, Stts, 0);
+    }
+	
+	public void saveStatusLogs(String Username, String Stts, int actionType) {
+		StatusLogs ustatus = new StatusLogs();
+		ustatus.setUniqueID(UUID.randomUUID().toString());
+		ustatus.setActionType(actionType); 
+		ustatus.setUserName(Username);
+		ustatus.setFromStatus("");
+		ustatus.setToStatus(Stts);
+		ustatus.setSqlUpdateDate(new Utility().getCreationDate());		
+		slog.save(ustatus);
+    }
 }

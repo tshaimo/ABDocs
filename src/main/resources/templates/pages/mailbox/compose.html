@@ -45,7 +45,7 @@
 				<li class="nav-item"><a class="nav-link" data-widget="pushmenu"
 					href="#" role="button"><i class="fas fa-bars"></i></a></li>
 				<li class="nav-item d-none d-sm-inline-block"><a
-					th:href="@{/Mailbox}" class="nav-link">Home</a></li>
+					th:href="@{/}" class="nav-link">Home</a></li>
 				<li class="nav-item d-none d-sm-inline-block" ><a
 					th:href="@{/Dashboard}" class="nav-link">Dashboard</a></li>
 			</ul>
@@ -82,13 +82,54 @@
 						class=""></span>
 				</a>
 					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+						<button class="dropdown-item" data-target=".bs-home-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Gone Home
+						</button>
+						<button class="dropdown-item" data-target=".bs-break-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Tea Break
+						</button>
+						<button class="dropdown-item" data-target=".bs-lunch-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Lunch
+						</button>
+						<button class="dropdown-item" data-target=".bs-bathroom-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Bathroom
+						</button>
+						<button class="dropdown-item" data-target=".bs-meeting-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Meeting
+						</button>
+						<button class="dropdown-item" data-target=".bs-training-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Training
+						</button>
+						<button class="dropdown-item" data-target=".bs-vacation-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Vacation
+						</button>
+						<button class="dropdown-item" data-target=".bs-coaching-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Coaching
+						</button>
 						<button class="dropdown-item" data-target=".bs-example-modal-sm"
 							data-toggle="modal">
 							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 							Logout
 						</button>
 
-					</div></li>
+					</div>
+				</li>
 
 
 				<li class="nav-item"><a class="nav-link"
@@ -130,14 +171,14 @@
 						<!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-						<li class="nav-item menu-open"><a th:href="@{/Mailbox}"
+						<li class="nav-item menu-open"><a th:href="@{/}"
 							class="nav-link active"> <i class="nav-icon far fa-envelope"></i>
 								<p>
 									Mailbox <i class="fas fa-angle-left right"></i>
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item"><a th:href="@{/Mailbox}"
+								<li class="nav-item"><a th:href="@{/}"
 									class="nav-link"> <i class="far fa-circle nav-icon"></i>
 										<p>Inbox</p>
 								</a></li>
@@ -165,7 +206,7 @@
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a th:href="@{/Mailbox}">Home</a></li>
+								<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
 								<li class="breadcrumb-item active">Compose</li>
 							</ol>
 						</div>
@@ -179,7 +220,7 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-3">
-							<a th:href="@{/Mailbox}" class="btn btn-primary btn-block mb-3">Back
+							<a th:href="@{/}" class="btn btn-primary btn-block mb-3">Back
 								to Inbox</a>
 
 							<div class="card">
@@ -195,7 +236,7 @@
 								</div>
 								<div class="card-body p-0">
 									<ul class="nav nav-pills flex-column">
-										<li class="nav-item active"><a th:href="@{/Mailbox}" class="nav-link">
+										<li class="nav-item active"><a th:href="@{/}" class="nav-link">
 												<i class="fas fa-inbox"></i> Inbox <span
 												class="badge bg-primary float-right" th:text="${Counter}"></span>
 										</a></li>
@@ -385,6 +426,174 @@
 			</div>
 		</div>
 	</div>
+	<div tabindex="-1" class="modal bs-home-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Home <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/home}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go home?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-break-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Break <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/break}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						take a tea break?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-lunch-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Lunch <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/lunch}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go on lunch?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-bathroom-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Bathroom <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/bathroom}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go to the bathroom?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-meeting-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Meeting <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/meeting}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go to a meeting?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-training-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Training <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/training}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go on training?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-vacation-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Vacation <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/vacation}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go on vacation?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-coaching-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Coaching <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/coaching}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go for coaching?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 	<div tabindex="-1" class="modal bs-example-modal-sm" role="dialog"
 		aria-hidden="true">
 		<div class="modal-dialog modal-sm">
@@ -429,7 +638,7 @@
 //Set timeout variables.
 var timoutWarning = 840000; // Display warning in 14 Mins.
 var timoutNow = 900000; // Timeout in 15 mins.
-var logoutUrl = '/Mailbox'; // URL to logout page.
+var logoutUrl = '/'; // URL to logout page.
 var elem = document.getElementById('Timer');
 var warningTimer;
 var timeoutTimer;

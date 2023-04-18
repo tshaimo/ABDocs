@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>za.co.africanbank.datascience</groupId>
     <artifactId>Abdocs</artifactId>
-    <version>0.0.4-ABDocs</version>
+    <version>0.0.8-ABDocs</version>
     <packaging>jar</packaging>
     <name>ABDocs</name>
     <description>Abdocs application to process documents</description>
@@ -44,6 +44,12 @@
             <artifactId>json-simple</artifactId>
             <version>1.1.1</version>
         </dependency>
+		<dependency>
+		    <groupId>org.assertj</groupId>
+		    <artifactId>assertj-core</artifactId>
+		    <version>3.21.0</version>
+		    <scope>runtime</scope>
+		</dependency>        
         <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-client</artifactId>
@@ -147,7 +153,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
 
     </dependencies>

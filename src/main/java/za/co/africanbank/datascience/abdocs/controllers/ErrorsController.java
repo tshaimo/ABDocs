@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import za.co.africanbank.datascience.abdocs.entities.Email_View;
 import za.co.africanbank.datascience.abdocs.repositories.ABDocsEmailViewRepository;
 import za.co.africanbank.datascience.abdocs.repositories.ABDocsUsersRepository;

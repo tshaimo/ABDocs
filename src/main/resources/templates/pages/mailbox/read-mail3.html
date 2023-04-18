@@ -31,7 +31,8 @@
 }
 </style>
 </head>
-<body class="hold-transition sidebar-mini" onload="StartTimers();" onmousemove="ResetTimers();" >
+<body class="hold-transition sidebar-mini" onload="StartTimers();"
+	onmousemove="ResetTimers();">
 	<div class="wrapper">
 		<!-- Navbar -->
 		<nav
@@ -41,52 +42,67 @@
 				<li class="nav-item"><a class="nav-link" data-widget="pushmenu"
 					href="#" role="button"><i class="fas fa-bars"></i></a></li>
 				<li class="nav-item d-none d-sm-inline-block"><a
-					th:href="@{/Mailbox}" class="nav-link">Home</a></li>
+					th:href="@{/}" class="nav-link">Home</a></li>
 				<li class="nav-item d-none d-sm-inline-block"><a
 					th:href="@{/Dashboard}" class="nav-link">Dashboard</a></li>
 			</ul>
 
 			<!-- Right navbar links -->
-			<ul class="navbar-nav ml-auto">
-				<!-- Navbar Search -->
-				<!--<li class="nav-item"><a class="nav-link"
-					data-widget="navbar-search" href="#" role="button"> <i
-						class="fas fa-search"></i>
-				</a>
-					<div class="navbar-search-block">
-						<form class="form-inline">
-							<div class="input-group input-group-sm">
-								<input class="form-control form-control-navbar" type="search"
-									placeholder="Search" aria-label="Search">
-								<div class="input-group-append">
-									<button class="btn btn-navbar" type="submit">
-										<i class="fas fa-search"></i>
-									</button>
-									<button class="btn btn-navbar" type="button"
-										data-widget="navbar-search">
-										<i class="fas fa-times"></i>
-									</button>
-								</div>
-							</div>
-						</form>
-					</div></li>-->
-
-				<!-- Messages Dropdown Menu -->
-
-				<!-- Notifications Dropdown Menu -->
+			<ul class="navbar-nav ml-auto">				
 				<li class="nav-item dropdown"><a class="nav-link"
 					data-toggle="dropdown" href="#"> <i
 						class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> <span
 						class=""></span>
 				</a>
 					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+						<button class="dropdown-item" data-target=".bs-home-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Gone Home
+						</button>
+						<button class="dropdown-item" data-target=".bs-break-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Tea Break
+						</button>
+						<button class="dropdown-item" data-target=".bs-lunch-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Lunch
+						</button>
+						<button class="dropdown-item" data-target=".bs-bathroom-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Bathroom
+						</button>
+						<button class="dropdown-item" data-target=".bs-meeting-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Meeting
+						</button>
+						<button class="dropdown-item" data-target=".bs-training-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Training
+						</button>
+						<button class="dropdown-item" data-target=".bs-vacation-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Vacation
+						</button>
+						<button class="dropdown-item" data-target=".bs-coaching-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Coaching
+						</button>
 						<button class="dropdown-item" data-target=".bs-example-modal-sm"
 							data-toggle="modal">
 							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 							Logout
 						</button>
 
-					</div></li>
+					</div>
+				</li>
 
 				<li class="nav-item"><a class="nav-link"
 					data-widget="fullscreen" href="#" role="button"> <i
@@ -101,7 +117,7 @@
 		<!-- Main Sidebar Container -->
 		<aside class="main-sidebar sidebar-dark-primary elevation-4">
 			<!-- Brand Logo -->
-			<a th:href="@{/Mailbox}" class="brand-link"> <img
+			<a th:href="@{/}" class="brand-link"> <img
 				src="../../dist/img/mid.png" alt=""
 				class="brand-image img-circle elevation-3" style="opacity: .8">
 				<span class="brand-text font-weight-light">African Bank</span>
@@ -136,7 +152,7 @@
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item"><a th:href="@{/Mailbox}"
+								<li class="nav-item"><a th:href="@{/}"
 									class="nav-link"> <i class="far fa-circle nav-icon"></i>
 										<p>Inbox</p>
 								</a></li>
@@ -172,13 +188,13 @@
 								</h5>
 								All Documents are Successfully Downloaded to Neptune.
 								<p id="textToCopy" th:text="${path}"></p>
-								<button class="btn btn-default btn-sm"
-										id="copyButton" data-copytarget="#link">
-										<i class="fas fa-copy"></i> Copy Location 
+								<button class="btn btn-default btn-sm" id="copyButton"
+									data-copytarget="#link">
+									<i class="fas fa-copy"></i> Copy Location
 								</button>
 								<span id="copyResult"></span>
 							</div>
-									<div class="alert alert-warning alert-dismissible"
+							<div class="alert alert-warning alert-dismissible"
 								style="background-color: #ffc107" th:if="${sendFail}">
 								<button type="button" class="close" data-dismiss="alert"
 									aria-hidden="true">&times;</button>
@@ -189,7 +205,7 @@
 									Email not Sent to <span th:text="${Email2}"></span>
 								<p>
 							</div>
-									<div class="alert alert-success alert-dismissible" id="success"
+							<div class="alert alert-success alert-dismissible" id="success"
 								th:if="${sent}">
 								<button type="button" class="close" data-dismiss="alert"
 									id="button" aria-hidden="true">&times;</button>
@@ -201,7 +217,7 @@
 								</P>
 							</div>
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a th:href="@{/Mailbox}">Home</a></li>
+								<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
 								<li class="breadcrumb-item active">Inbox</li>
 							</ol>
 						</div>
@@ -215,7 +231,7 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-3">
-							<a th:href="@{/Mailbox}" class="btn btn-primary btn-block mb-3">Back
+							<a th:href="@{/}" class="btn btn-primary btn-block mb-3">Back
 								to Inbox</a>
 
 							<div class="card">
@@ -231,7 +247,7 @@
 								</div>
 								<div class="card-body p-0">
 									<ul class="nav nav-pills flex-column">
-										<li class="nav-item active"><a th:href="@{/Mailbox}"
+										<li class="nav-item active"><a th:href="@{/}"
 											class="nav-link"> <i class="fas fa-inbox"></i> Inbox <span
 												class="badge bg-primary float-right" th:text="${Counter}"></span>
 										</a></li>
@@ -311,28 +327,28 @@
 
 									<!-- /.mailbox-controls -->
 									<div class="mailbox-read-message">
-												<div class="card" style="border-radius:0px">
-								<div class="card-header">
-									<h3 class="card-title"></h3>
+										<div class="card" style="border-radius: 0px">
+											<div class="card-header">
+												<h3 class="card-title"></h3>
 
-									<div class="card-tools">
-										<button type="button" class="btn btn-tool"
-											data-card-widget="collapse">
-											<i class="fas fa-minus"></i>
-										</button>
-									</div>
-								</div>
-								<!-- /.card-header -->
+												<div class="card-tools">
+													<button type="button" class="btn btn-tool"
+														data-card-widget="collapse">
+														<i class="fas fa-minus"></i>
+													</button>
+												</div>
+											</div>
+											<!-- /.card-header -->
 
-								<div class="card-body p-0">
-						        <p th:utext="${Body}"></p>
-								</div>
-
-
+											<div class="card-body p-0">
+												<p th:utext="${Body}"></p>
+											</div>
 
 
-								<!-- /.card-body -->
-							</div>
+
+
+											<!-- /.card-body -->
+										</div>
 
 										<div>
 											<!--  <object>
@@ -363,7 +379,7 @@
 							</div>
 							<form th:action="@{/WrapUp}" method="Get">
 								<div class="form-group">
-									  <input type="hidden" name="IDNumber" th:value="${IDNumber}"/>
+									<input type="hidden" name="IDNumber" th:value="${IDNumber}" />
 								</div>
 								<div class="form-group">
 									<select class="form-control select2bs4" style="width: 50%;"
@@ -378,15 +394,23 @@
 										<option>Unclear Documents</option>
 										<option>Partial Documents Received</option>
 										<option>All Documents Received</option>
-								        <option>Application expired</option>
+										<option>Application expired</option>
 										<option>Mimecast</option>
 									</select>
 								</div>
+
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="checkbox"
+										name="Assistance" id="inlineCheckbox1" value="option1">
+									<label class="form-check-label" for="inlineCheckbox1">Client
+										requires feedback/assistance</label>
+								</div>
+								<br>
 								<!-- /.card-footer -->
 								<input type="hidden" th:value="${Email}" name="Email" />
 								<div class="card-footer">
 									<div class="float-right">
-										<input type="hidden" th:value="${UUID}" name="UUID"/>
+										<input type="hidden" th:value="${UUID}" name="UUID" />
 									</div>
 									<button type="submit" class="btn btn-default"
 										id="btn btn-success toastsDefaultSuccess" name="Wrap"
@@ -394,8 +418,8 @@
 										<i class="far fa-envelope"></i> Submit
 									</button>
 									<button type="submit" class="btn btn-default" value="Reply"
-											name="Reply" formnovalidate>
-											<i class="fas fa-reply"></i> Reply
+										name="Reply" formnovalidate>
+										<i class="fas fa-reply"></i> Reply
 									</button>
 								</div>
 							</form>
@@ -434,8 +458,178 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
-					<p><span id="Timer"></span></p>
+					<p>
+						<span id="Timer"></span>
+					</p>
 				</div>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-home-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Home <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/home}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go home?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-break-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Break <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/break}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						take a tea break?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-lunch-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Lunch <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/lunch}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go on lunch?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-bathroom-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Bathroom <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/bathroom}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go to the bathroom?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-meeting-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Meeting <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/meeting}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go to a meeting?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-training-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Training <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/training}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go on training?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-vacation-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Vacation <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/vacation}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go on vacation?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-coaching-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Coaching <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/coaching}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go for coaching?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -489,12 +683,12 @@ $(function () {
             }
        
       </script>
-     <script>
+	<script>
 
 //Set timeout variables.
 var timoutWarning = 840000; // Display warning in 14 Mins.
 var timoutNow = 900000; // Timeout in 15 mins.
-var logoutUrl = '/Mailbox'; // URL to logout page.
+var logoutUrl = '/'; // URL to logout page.
 var elem = document.getElementById('Timer');
 var warningTimer;
 var timeoutTimer;
@@ -548,7 +742,7 @@ function IdleTimeout() {
     window.location = logoutUrl;
 }
 </script>
-<script>
+	<script>
 function CopyToClipboard(containerid) {
 	  if (document.selection) {
 	    var range = document.body.createTextRange();
@@ -565,7 +759,7 @@ function CopyToClipboard(containerid) {
 	}
 
 </script>
-<script>
+	<script>
 const answer = document.getElementById("copyResult");
 const copy   = document.getElementById("copyButton");
 const selection = window.getSelection();

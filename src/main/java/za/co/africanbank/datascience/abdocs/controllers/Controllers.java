@@ -34,6 +34,7 @@ import za.co.africanbank.datascience.abdocs.entities.ABDocs_Documents;
 import za.co.africanbank.datascience.abdocs.entities.ABDocs_Emails;
 import za.co.africanbank.datascience.abdocs.entities.ABDocs_Links;
 import za.co.africanbank.datascience.abdocs.entities.ABDocs_Logging;
+import za.co.africanbank.datascience.abdocs.entities.ABDocs_UserStatus;
 import za.co.africanbank.datascience.abdocs.entities.ABDocs_Users;
 import za.co.africanbank.datascience.abdocs.entities.ABDocs_UsersActivity;
 import za.co.africanbank.datascience.abdocs.entities.Email_View;
@@ -49,6 +50,7 @@ import za.co.africanbank.datascience.abdocs.repositories.ABDocsUsersActivityRepo
 import za.co.africanbank.datascience.abdocs.repositories.ABDocsUsersRepository;
 import za.co.africanbank.datascience.abdocs.repositories.CountRepository;
 import za.co.africanbank.datascience.abdocs.repositories.TotalRepository;
+import za.co.africanbank.datascience.abdocs.repositories.UserStatusRepository;
 import za.co.africanbank.datascience.abdocs.utilities.Utility;
 
 
@@ -69,6 +71,8 @@ public class Controllers {
 	@Autowired
 	private ABDocsUsersRepository user;
 	@Autowired
+	private UserStatusRepository status;
+	@Autowired
 	ABDocsDao dao;
 	@Autowired
 	ABDocsLoggingRepository logging;
@@ -80,8 +84,7 @@ public class Controllers {
 	ABDocsCommentsRepository comments;
 	private Set<String> sessionIds = Collections.synchronizedSet(new HashSet<>());
 	int count =0;
-
-
+	private String neptune = "/tmp/files/";
 
 	@GetMapping("/")
 	public String index(Model model,HttpSession session,HttpServletRequest request) {
@@ -92,70 +95,85 @@ public class Controllers {
 		model.addAttribute("Complete","");
 		model.addAttribute("Role",user.getUserDetail(request.getRemoteUser()).getRole());
 		model.addAttribute("FullNames",user.getUserDetail(request.getRemoteUser()).getFullNames());
-		return "pages/mailbox/mailbox";
+		return "pages/mailbox/workflow";
 	}
-
+	
 	@GetMapping("/Mailbox")
 	public String Mailbox(Model model,HttpServletRequest request) {
-
+		if (request.getParameter("first") != null) {
+			dao.saveUserStatus(request.getRemoteUser(), request.getParameter("first"));
+		}
 		List<Email_View> EmailList = view.AllMails(request.getRemoteUser());
 		model.addAttribute("EmailList", EmailList);
 		model.addAttribute("Counter",total.Count().getRowNumber());
 		model.addAttribute("Complete","");
 		model.addAttribute("Role",user.getUserDetail(request.getRemoteUser()).getRole());
-		model.addAttribute("FullNames",user.getUserDetail(request.getRemoteUser()).getFullNames());
+		model.addAttribute("FullNames",user.getUserDetail(request.getRemoteUser()).getFullNames());	
+		
+		
 		return "pages/mailbox/mailbox";
 	}
-
+	
 	@GetMapping("/ReadDistinc")
-	public String ReadDistinc(RedirectAttributes redirAttrs,Model model,@RequestParam(name="IDNumber",required =false)String IDNumber,HttpServletRequest request,@RequestParam(name="System_uuid",required =false) String System_uuid) {
-
-		List<ABDocs_Emails> DistincEmailList = viewDistinc.DistinctEmails(IDNumber,request.getRemoteUser());
-		List<ABDocs_Emails> CheckAssigned = viewDistinc.CheckAssigned(IDNumber);
-
-		if(DistincEmailList.isEmpty()) {
-			for(ABDocs_Emails mail : CheckAssigned) {	
-				ABDocs_Emails eml = viewDistinc.findById(mail.getUUID()).get();
-				if(eml.getUsername()!=null && !eml.getUsername().equalsIgnoreCase(request.getRemoteUser())) {
-					redirAttrs.addFlashAttribute("Userbusy",user.getUserDetail(eml.getUsername()).getFullNames());
-					redirAttrs.addFlashAttribute("Assigned","Assigned");
-					return "redirect:/Mailbox";
-				}
-			}
+	 public String ReadDistinc( Model model, HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		String idNumber;
+		dao.saveStatusLogs(request.getRemoteUser(), "Available", 1);
+		if (request.getParameter("first") != null) {
+			dao.saveUserStatus(request.getRemoteUser(), request.getParameter("first"));
 		}
-
-		for(ABDocs_Emails mail : DistincEmailList ){
-			ABDocs_Emails eml = viewDistinc.findById(mail.getUUID()).get();
-			if(eml.getUsername()==null || eml.getUsername()=="") {
-
-				eml.setUsername(request.getRemoteUser());
-				viewDistinc.save(eml);
-			}
-
+		if (request.getParameter("IDNumber") != null) {
+			idNumber = request.getParameter("IDNumber");
+		} else {
+			List<ABDocs_Emails> fifo = mail.AssignedFIFO();
+			if (fifo.size() > 0) {
+				idNumber = fifo.get(0).getIDNumber();
+			} else {
+				redirectAttributes.addFlashAttribute("error", "No unassigned emails found for this ID number.");
+			    return "redirect:/options";
+			}			
 		}
-
-		model.addAttribute("DistincEmailList", DistincEmailList);
-		model.addAttribute("Counter",total.Count().getRowNumber());
-		model.addAttribute("Role",user.getUserDetail(request.getRemoteUser()).getRole());
-		model.addAttribute("FullNames",user.getUserDetail(request.getRemoteUser()).getFullNames());
-		//viewDistinc.assignMails(request.getRemoteUser(), IDNumber);
+		List<ABDocs_Emails> assignedEmails = mail.CheckAssigned(idNumber);	          
+		List<ABDocs_Emails> distinctEmails = viewDistinc.distinctEmails(idNumber, request.getRemoteUser());
+		
+		for (ABDocs_Emails email : distinctEmails) {
+		    if (email.getUsername() == null || email.getUsername().isEmpty()) {
+		         email.setUsername(request.getRemoteUser());
+		         mail.save(email);
+		         assignedEmails.add(email);
+		         break;
+		    }
+		}
+		 
+		model.addAttribute("assignedEmails", assignedEmails);
+		model.addAttribute("distinctEmails", distinctEmails);
+		model.addAttribute("Counter", total.Count().getRowNumber());
+		model.addAttribute("Role", user.getUserDetail(request.getRemoteUser()).getRole());
+		model.addAttribute("FullNames", user.getUserDetail(request.getRemoteUser()).getFullNames());
+		
+		// Check if assignedEmails is empty
+		if (assignedEmails.isEmpty()) {
+		    redirectAttributes.addFlashAttribute("error", "No unassigned emails found for this ID number.");
+		    return "redirect:/options";
+		}
 		return "pages/mailbox/distinc-mail";
 	}
 
+	
 	@PostMapping("/BoltUpload")
 	public String BoltUpload(Model model,@RequestParam(name="IDNumber",required =false)String IDNumber,HttpServletRequest request) throws UniformInterfaceException, ClientHandlerException, IOException {
+		dao.saveStatusLogs(request.getRemoteUser(), "Available", 1);
 		String output=new JerseyClient().play(new properties(constant.PROPERTYFILE.value()).read("ClientSearch"),new BoltRequest().ClientSearch("6005055275088"));
 		System.out.print(output);
 		model.addAttribute("Role",user.getUserDetail(request.getRemoteUser()).getRole());
 		model.addAttribute("FullNames",user.getUserDetail(request.getRemoteUser()).getFullNames());
+		//TODO new location to change the workflow
 		return "redirect:/Mailbox";
 	}
 
 
 	@GetMapping("/WrapUp")
 	public String WrapUp(Model model,HttpServletRequest request,HttpServletResponse response,@RequestParam(name="Assistance",required=false)String Assistance,@RequestParam(name="IDNumber",required =false)String IDNumber,@RequestParam(name="UUID",required =false)String UUID,RedirectAttributes redirAttrs,@RequestParam(name="Wrapcode",required =false)String Wrapcode,@RequestParam(name="Email",required =false)String Email,@RequestParam(name="Reply",required =false)String Reply) throws InterruptedException {
-
-
+		dao.saveStatusLogs(request.getRemoteUser(), "Available", 1);
 		if(Reply !=null && Reply !="") {
 			model.addAttribute("FullNames",user.getUserDetail(request.getRemoteUser()).getFullNames());
 			model.addAttribute("Counter",total.Count().getRowNumber());
@@ -164,8 +182,6 @@ public class Controllers {
 			model.addAttribute("IDNumber",IDNumber);
 			return "pages/mailbox/compose";
 		}
-
-
 
 		List<ABDocs_Emails> DistincEmailList = viewDistinc.DistinctEmails(IDNumber,request.getRemoteUser());
 		ABDocs_Emails mai;
@@ -203,15 +219,19 @@ public class Controllers {
 				return "pages/mailbox/distinc-mail";
 			}
 			if(DistincEmailList.isEmpty()){
-
 				redirAttrs.addFlashAttribute("complete", "Complete");
 				redirAttrs.addFlashAttribute("IDNumber", IDNumber);
 				redirAttrs.addFlashAttribute("Email",mai.getFromAddress());
-				return "redirect:/Mailbox";
+				ABDocs_UserStatus ustatus = status.getStatusByUsername(request.getRemoteUser());
+				if(ustatus != null && ustatus.getStatus().equalsIgnoreCase("Available")){
+					dao.saveStatusLogs(request.getRemoteUser(), "Follow-up", 1);
+					return "redirect:/ReadDistinc";
+				} else {			
+					return "redirect:/Mailbox";
+				}
 
 			}
 		}
-
 
 		model.addAttribute("Role",user.getUserDetail(request.getRemoteUser()).getRole());
 		model.addAttribute("UUID", UUID);
@@ -226,23 +246,25 @@ public class Controllers {
 		return "pages/mailbox/read-mail3";
 
 	}
-
 	@PostMapping("/NeptuneUpload")
 	public String NeptuneUpload(Model model,HttpServletRequest request,HttpServletResponse response,@RequestParam(name="IDNumber",required =false)String IDNumber,@RequestParam(name="UUID",required =false)String UUID,RedirectAttributes redirAttrs,@RequestParam(name="Wrapcode",required =false)String Wrapcode) throws IOException {
 		//ABDocs_Emails mai;
-		String path = new properties(constant.PROPERTYFILE.value()).read("NeptuneDownload") + request.getRemoteUser() + "\\";
+		String path = neptune + request.getRemoteUser() + "/";
+		//String path = new properties(constant.PROPERTYFILE.value()).read("NeptuneDownload") + request.getRemoteUser() + "\\";
 		path = path + IDNumber;
 		File file = new File(path);
 		file.mkdirs();
 		List<ABDocs_Logging> log = logging.findByEmail_UUID(UUID);
 		List<ABDocs_Documents> AllDocList = docs.AllDocument(UUID);
+		
 		for(ABDocs_Documents document : AllDocList) {
 			System.out.println(document.getCategory());
 			File fil=null;
-			System.out.println(path +"\\"+ document.getCategory()+".pdf");
-			fil = new File(path +"\\"+ document.getCategory()+".pdf");
+			System.out.println(path +"/"+ document.getCategory()+".pdf");
+			fil = new File(path +"/"+ document.getCategory()+".pdf");
+			//fil = new File(,file document.getCategory()+".pdf");
 			for (int i = 1; fil.exists(); i++) {
-				fil = new File(path +"\\"+ document.getCategory()+"_"+i+".pdf");
+				fil = new File(path +"/"+ document.getCategory()+"_"+i+".pdf");
 			}
 			response.setContentType("application/pdf");
 			response.setHeader("Cache-control", "private, max-age=0");
@@ -257,24 +279,11 @@ public class Controllers {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 		}
-
 		for(ABDocs_Logging logg : log) {
 			logg.setDownloadDate(new Utility().getCreationDate());
 			logging.save(logg);
 		}
-
-		/*mai= mail.findById(UUID).get();
-		List<ABDocs_Logging> log = logging.findByEmail_UUID(UUID);
-
-		for(ABDocs_Logging logg : log) {
-			logg.setCompletedDate(new Utility().getCreationDate());
-			logging.save(logg);
-		}
-		//mai.setStatus("Complete");
-		//mai.setWrapUpCode(Wrapcode);
-		//mail.save(mai); */
 
 		redirAttrs.addFlashAttribute("complete", "Complete");
 		redirAttrs.addAttribute("UUID", UUID);
@@ -282,29 +291,21 @@ public class Controllers {
 		//redirAttrs.addFlashAttribute("Email",mai.getFromAddress());
 		model.addAttribute("Role",user.getUserDetail(request.getRemoteUser()).getRole());
 		model.addAttribute("FullNames",user.getUserDetail(request.getRemoteUser()).getFullNames());
-		redirAttrs.addFlashAttribute("path",path.replace("P:", "\\\\Neptune\\directdoc$")); 
+		redirAttrs.addFlashAttribute("path",path.replace(neptune, "\\\\Neptune\\directdoc$\\ABDocs\\").replace("/","\\"));
 		return "redirect:/WrapUp";
-
-
+		
 	}
 
 	@GetMapping("/ABDocs")
-	public String login(HttpServletRequest request, HttpSession session,Model model,@RequestParam(name="logout",required =false)String logout,@RequestParam(name="Login",required =false)String Login) {
+	public String login(HttpServletRequest request, HttpSession session, Model model, @RequestParam(name="logout",required =false)String logout, @RequestParam(name="Login", required =false)String Login) {
 		session.setAttribute("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
-		//model.addAttribute("Username", request.getRemoteUser());
 		model.addAttribute("Login", Login);
-
-
 		if(null != logout) {
-
 			ABDocs_UsersActivity act = new ABDocs_UsersActivity();
 			this.sessionIds.remove(session.getId());
-			//act.setUsername(model.getAttribute("Username").toString());
 			act.setLogout_Time(new Utility().getCreationDate());
 			activity.save(act);
-
 		}
-
 		return "index";
 	}
 
@@ -316,13 +317,49 @@ public class Controllers {
 		return "index";
 	}
 
+	@PostMapping("/logout/coaching")
+	public String coaching(HttpServletRequest request, HttpServletResponse response) {
+		return logoutPage (request, response,"coaching");
+	}
+	@PostMapping("/logout/vacation")
+	public String vacation(HttpServletRequest request, HttpServletResponse response) {
+		return logoutPage (request, response,"vacation");
+	}
+	@PostMapping("/logout/training")
+	public String training(HttpServletRequest request, HttpServletResponse response) {
+		return logoutPage (request, response,"training");
+	}
+	@PostMapping("/logout/meeting")
+	public String meeting(HttpServletRequest request, HttpServletResponse response) {
+		return logoutPage (request, response,"meeting");
+	}
+	@PostMapping("/logout/bathroom")
+	public String bathroom(HttpServletRequest request, HttpServletResponse response) {
+		return logoutPage (request, response,"bathroom");
+	}
+	@PostMapping("/logout/lunch")
+	public String lunch(HttpServletRequest request, HttpServletResponse response) {
+		return logoutPage (request, response,"lunch");
+	}
+	@PostMapping("/logout/break")
+	public String breakg(HttpServletRequest request, HttpServletResponse response) {
+		return logoutPage (request, response,"break");
+	}
+	@PostMapping("/logout/home")
+	public String home(HttpServletRequest request, HttpServletResponse response) {
+		return logoutPage (request, response,"home");
+	}
 	@PostMapping("/logout")
-	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+		return logoutPage (request, response,"logout");
+	}
+	
+	private String logoutPage (HttpServletRequest request, HttpServletResponse response,String status) {
+		dao.saveUserStatus(request.getRemoteUser(), status);
 		org.springframework.security.core.Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null){    
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
-
 		return "redirect:/ABDocs?logout";
 	}
 
@@ -388,10 +425,7 @@ public class Controllers {
 		String System_UUID="";
 		String File="";
 		String Category="";
-
-
 		
-
 		log.setEmail_UUID(UUID);
 		log.setUsername(request.getRemoteUser());
 		log.setSQLCreationDate(new Utility().getCreationDate());
@@ -468,8 +502,6 @@ public class Controllers {
 		model.addAttribute("FullNames",user.getUserDetail(request.getRemoteUser()).getFullNames());
 		File="";
 		return "redirect:/Redirect";
-
-
 	}
 
 
@@ -490,8 +522,6 @@ public class Controllers {
 		ABDocs_Documents docu;
 		String File="";
 		String Category="";
-
-
 
 		if(docs.findDocument(UUID) !=null && docs.findDocument(UUID).getSystem_UUID() !=null ) {
 
@@ -835,8 +865,4 @@ public class Controllers {
 		}
 		return false;
 	}
-
-
-
-
 }

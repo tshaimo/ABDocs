@@ -57,8 +57,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 
 	boolean isLdapRegisteredUser(String username, String password) {
-		try
-		{
+		try {
 			Hashtable<String, String> env = new Hashtable<String, String>();
 			env.put(Context.INITIAL_CONTEXT_FACTORY, ldapContextFactory);
 			env.put(Context.PROVIDER_URL, ldapUrlForServer1);
@@ -66,13 +65,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 			env.put(Context.SECURITY_PRINCIPAL, username+ DOMAIN_NAME); 
 			env.put(Context.SECURITY_CREDENTIALS, password);
 			DirContext ctx = new InitialDirContext(env);
-			//<--------------------------------------------->
-			String searchFilter = "(&(objectCategory=Person)(sAMAccountName="+username+")(memberOf=cn=DART_webApplicationAccess,cn=Users,dc=Africanbank,dc=net))";
+			String searchFilter = "(&(objectCategory=Person)(sAMAccountName="+username+")(memberOf=cn="+((System.getenv("ad_group") != null)?System.getenv("ad_group"):"DART_webApplicationAccess")+",cn=Users,dc=Africanbank,dc=net))";
 			String[] reqAtt = {"ou","cn","sn","uid","givenName","sAMAccountName"};
 			SearchControls controls = new SearchControls();
 			controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 			controls.setReturningAttributes(reqAtt);
-
 			@SuppressWarnings("rawtypes")
 			NamingEnumeration users = ctx.search("dc=africanbank,dc=net", searchFilter, controls);
 
@@ -89,13 +86,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 				ctx.close();
 				return true;
 			}
-
-			//<--------------------------------------------->
-
-			/*if(ctx != null && result !=null)
-				ctx.close();
-			return true; */
-		}catch(NamingException ae)		{
+		}catch(NamingException ae) {
+			ae.printStackTrace();
 			logger.error("Acces Failed for ", username);
 			return false;
 		}

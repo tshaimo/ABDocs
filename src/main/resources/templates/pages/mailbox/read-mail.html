@@ -44,7 +44,7 @@
 				<li class="nav-item"><a class="nav-link" data-widget="pushmenu"
 					href="#" role="button"><i class="fas fa-bars"></i></a></li>
 				<li class="nav-item d-none d-sm-inline-block"><a
-					th:href="@{/Mailbox}" class="nav-link">Home</a></li>
+					th:href="@{/}" class="nav-link">Home</a></li>
 				<li class="nav-item d-none d-sm-inline-block"><a
 					th:href="@{/Dashboard}" class="nav-link">Dashboard</a></li>
 			</ul>
@@ -83,13 +83,54 @@
 						class=""></span>
 				</a>
 					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+						<button class="dropdown-item" data-target=".bs-home-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Gone Home
+						</button>
+						<button class="dropdown-item" data-target=".bs-break-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Tea Break
+						</button>
+						<button class="dropdown-item" data-target=".bs-lunch-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Lunch
+						</button>
+						<button class="dropdown-item" data-target=".bs-bathroom-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Bathroom
+						</button>
+						<button class="dropdown-item" data-target=".bs-meeting-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Meeting
+						</button>
+						<button class="dropdown-item" data-target=".bs-training-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Training
+						</button>
+						<button class="dropdown-item" data-target=".bs-vacation-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Vacation
+						</button>
+						<button class="dropdown-item" data-target=".bs-coaching-modal-sm"
+							data-toggle="modal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Coaching
+						</button>
 						<button class="dropdown-item" data-target=".bs-example-modal-sm"
 							data-toggle="modal">
 							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 							Logout
 						</button>
 
-					</div></li>
+					</div>
+				</li>
 
 				<li class="nav-item"><a class="nav-link"
 					data-widget="fullscreen" href="#" role="button"> <i
@@ -104,7 +145,7 @@
 		<!-- Main Sidebar Container -->
 		<aside class="main-sidebar sidebar-dark-primary elevation-4">
 			<!-- Brand Logo -->
-			<a th:href="@{/Mailbox}" class="brand-link"> <img
+			<a th:href="@{/}" class="brand-link"> <img
 				src="../../dist/img/mid.png" alt=""
 				class="brand-image img-circle elevation-3" style="opacity: .8">
 				<span class="brand-text font-weight-light">African Bank</span>
@@ -139,7 +180,7 @@
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item"><a th:href="@{/Mailbox}"
+								<li class="nav-item"><a th:href="@{/}"
 									class="nav-link"> <i class="far fa-circle nav-icon"></i>
 										<p>Inbox</p>
 								</a></li>
@@ -181,7 +222,7 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-3">
-							<a th:href="@{/Mailbox}" class="btn btn-primary btn-block mb-3">Back
+							<a th:href="@{/}" class="btn btn-primary btn-block mb-3">Back
 								to Inbox</a>
 
 							<div class="card">
@@ -197,7 +238,7 @@
 								</div>
 								<div class="card-body p-0">
 									<ul class="nav nav-pills flex-column">
-										<li class="nav-item active"><a th:href="@{/Mailbox}"
+										<li class="nav-item active"><a th:href="@{/}"
 											class="nav-link"> <i class="fas fa-inbox"></i> Inbox <span
 												class="badge bg-primary float-right" th:text="${Counter}"></span>
 										</a></li>
@@ -294,33 +335,33 @@
 
 									<!-- /.mailbox-controls -->
 									<div class="mailbox-controls with-border">
-									
-									
-							<div class="card" style="border-radius:0px">
-								<div class="card-header">
-									<h3 class="card-title"></h3>
-
-									<div class="card-tools">
-										<button type="button" class="btn btn-tool"
-											data-card-widget="collapse">
-											<i class="fas fa-minus"></i>
-										</button>
-									</div>
-								</div>
-								<!-- /.card-header -->
-
-								<div class="card-body p-0">
-						        <p th:utext="${Body}"></p>
-								</div>
 
 
+										<div class="card" style="border-radius: 0px">
+											<div class="card-header">
+												<h3 class="card-title"></h3>
+
+												<div class="card-tools">
+													<button type="button" class="btn btn-tool"
+														data-card-widget="collapse">
+														<i class="fas fa-minus"></i>
+													</button>
+												</div>
+											</div>
+											<!-- /.card-header -->
+
+											<div class="card-body p-0">
+												<p th:utext="${Body}"></p>
+											</div>
 
 
-								<!-- /.card-body -->
-							</div>
-									
-										<p th:if="${!commentList.empty}"  style="font-weight: bold;">ABDocs consultants
-											comments on Document:</p>
+
+
+											<!-- /.card-body -->
+										</div>
+
+										<p th:if="${!commentList.empty}" style="font-weight: bold;">ABDocs
+											consultants comments on Document:</p>
 										<div th:each="comment : ${commentList}" class="">
 
 											<p th:text="${comment.Fullnames +' - '+ comment.Comment}"
@@ -328,8 +369,8 @@
 										</div>
 										<hr th:if="${!emailComments.empty && !commentList.empty}"
 											Style="border-top: 1px solid #8c8b8b;">
-										<p th:if="${!emailComments.empty}"  style="font-weight: bold;">ABDocs consultants
-											general comments on Email :</p>
+										<p th:if="${!emailComments.empty}" style="font-weight: bold;">ABDocs
+											consultants general comments on Email :</p>
 										<div th:each="comment2 : ${emailComments}" class="">
 
 											<p th:text="${comment2.Fullnames +' - '+ comment2.Comment}"
@@ -392,7 +433,7 @@
 								</form>-->
 
 							</div>
-					
+
 							<form th:action="@{/ReadMail}" method="Post" id="Nodocuments"></form>
 							<div th:if="${AllDocList.empty}">
 								<form th:action="@{/WrapUp}" method="Get">
@@ -416,6 +457,16 @@
 											<option>Mimecast</option>
 										</select>
 									</div>
+
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="checkbox"
+											name="Assistance" id="inlineCheckbox1" value="option1">
+										<label class="form-check-label" for="inlineCheckbox1">Client
+											requires feedback/assistance</label>
+									</div>
+									<br>
+
+
 									<!-- /.card-footer -->
 									<input type="hidden" th:value="${Email}" name="Email" /> <input
 										type="hidden" th:value="${Email}" name="Email"
@@ -464,26 +515,27 @@
 											<option>Marriage certificate</option>
 											<option>Payslip Or Salary Advice</option>
 											<option>Work permit Or VISA document</option>
-											
-											
-											
-											
-											
-											
-											
-											
-											
-											
-											
+
+
+
+
+
+
+
+
+
+
+
 										</select>
 									</div>
-							
+
 									<div class="form-group">
 										<label>Comment Area</label>
 										<textarea class="form-control" rows="3"
-											placeholder="Comments.." style="width: 50%;" name="Comment" id="text"></textarea>
+											placeholder="Comments.." style="width: 50%;" name="Comment"
+											id="text"></textarea>
 									</div>
-											<div class="form-group clearfix">
+									<div class="form-group clearfix">
 										<div class="icheck-success d-inline">
 											<input type="radio" name="commentType" value="Email"
 												id="radioSuccess1"> <label for="radioSuccess1">
@@ -503,7 +555,7 @@
 												type="hidden" th:value="${SpecificUUID}" name="SpecificUUID" />
 											<button type="submit" class="btn btn-default"
 												id="btn btn-success toastsDefaultSuccess" name="Accept"
-												value="Complete" >
+												value="Complete">
 												<i class="fa fa-check-circle"></i> Accept Document
 											</button>
 
@@ -599,7 +651,174 @@
 
 		</div>
 	</div>
-
+	<div tabindex="-1" class="modal bs-home-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Home <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/home}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go home?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-break-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Break <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/break}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						take a tea break?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-lunch-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Lunch <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/lunch}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go on lunch?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-bathroom-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Bathroom <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/bathroom}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go to the bathroom?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-meeting-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Meeting <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/meeting}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go to a meeting?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-training-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Training <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/training}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go on training?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-vacation-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Vacation <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/vacation}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go on vacation?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex="-1" class="modal bs-coaching-modal-sm" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>
+						Coaching <i class=""></i>
+					</h4>
+				</div>
+				<form th:action="@{/logout/coaching}" method="post">
+					<div class="modal-body">
+						<i class="fa fa-question-circle"></i> Are you sure you want to
+						go for coaching?
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-block">Logout</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 	<div tabindex="-1" class="modal bs-example-modal-sm" role="dialog"
 		aria-hidden="true">
 		<div class="modal-dialog modal-sm">
@@ -655,7 +874,7 @@ $(function () {
 //Set timeout variables.
 var timoutWarning = 840000; // Display warning in 14 Mins.
 var timoutNow = 900000; // Timeout in 15 mins.
-var logoutUrl = '/Mailbox'; // URL to logout page.
+var logoutUrl = '/'; // URL to logout page.
 var elem = document.getElementById('Timer');
 var warningTimer;
 var timeoutTimer;
@@ -709,7 +928,7 @@ function IdleTimeout() {
 }
 </script>
 
-<script>
+	<script>
 $(function() {
 	  $("[name='commentType']").on("click", function() {
 	    if (this.id == "radioSuccess1" || this.id == "radioSuccess2") {
@@ -720,7 +939,7 @@ $(function() {
 	  });
 	});
 </script>
-<script>
+	<script>
 $(function() {
 $('#text').blur(function()
 		{

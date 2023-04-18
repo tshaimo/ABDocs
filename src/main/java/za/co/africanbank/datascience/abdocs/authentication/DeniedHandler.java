@@ -28,6 +28,6 @@ public class DeniedHandler implements AccessDeniedHandler {
                     + httpServletRequest.getRequestURI());
         }
 
-        httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/Mailbox");
+        httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/Workflow");
     }
 }

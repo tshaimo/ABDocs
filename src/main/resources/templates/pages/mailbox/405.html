@@ -42,7 +42,7 @@
 				<li class="nav-item"><a class="nav-link" data-widget="pushmenu"
 					href="#" role="button"><i class="fas fa-bars"></i></a></li>
 				<li class="nav-item d-none d-sm-inline-block"><a
-					th:href="@{/Mailbox}" class="nav-link">Home</a></li>
+					th:href="@{/}" class="nav-link">Home</a></li>
 				<li class="nav-item d-none d-sm-inline-block" ><a
 					th:href="@{/Dashboard}" class="nav-link">Dashboard</a></li>
 			</ul>
@@ -103,7 +103,7 @@
 		<!-- Main Sidebar Container -->
 		<aside class="main-sidebar sidebar-dark-primary elevation-4">
 			<!-- Brand Logo -->
-			<a th:href="@{/Mailbox}" class="brand-link"> <img
+			<a th:href="@{/}" class="brand-link"> <img
 				src="dist/img/mid.png" alt=""
 				class="brand-image img-circle elevation-3" style="opacity: .8">
 				<span class="brand-text font-weight-light">African Bank</span>
@@ -172,7 +172,7 @@
 
           <p>
             HTTP Status Code 405: The method received in the request-line is known by the origin server but not supported by the target resource
-           ,you may <a th:href="@{/Mailbox}">return to Mailbox</a> 
+           ,you may <a th:href="@{/}">return to Mailbox</a> 
           </p>
 
           <form class="search-form">
@@ -385,7 +385,7 @@ var myChart = new Chart(ctx, {
 //Set timeout variables.
 var timoutWarning = 840000; // Display warning in 14 Mins.
 var timoutNow = 900000; // Timeout in 15 mins.
-var logoutUrl = '/Mailbox'; // URL to logout page.
+var logoutUrl = '/'; // URL to logout page.
 var elem = document.getElementById('Timer');
 var warningTimer;
 var timeoutTimer;

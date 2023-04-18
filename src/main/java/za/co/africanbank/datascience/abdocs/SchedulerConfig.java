@@ -1,6 +1,7 @@
 package za.co.africanbank.datascience.abdocs;
 import java.io.IOException;
 import java.util.Properties;
+import javax.sql.DataSource;
 import org.quartz.JobDetail;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -68,4 +70,17 @@ public class SchedulerConfig {
         factoryBean.setDurability(true);
         return factoryBean;
     }
+
+   /* @Bean
+    public DataSource getDataSource(){
+    	DataSourceBuilder source = DataSourceBuilder.create();
+    	source.driverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        System.out.println("jdbc:sqlserver://"+System.getenv("db_name")+";databaseName=ABDocs");
+        source.url((System.getenv("db_name") != null)
+    			?"jdbc:sqlserver://"+System.getProperty("db_name")+";databaseName=ABDocs"
+    				:"jdbc:sqlserver://10.30.121.215;databaseName=ABDocs");
+    	source.username("Blaze");
+    	source.password("jZ&5^$L3*kj");
+    	return source.build();
+    }*/
 }
