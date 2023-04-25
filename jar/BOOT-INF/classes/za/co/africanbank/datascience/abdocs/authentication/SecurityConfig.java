@@ -45,10 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/options").authenticated()
             .anyRequest().authenticated()
             .and()
-            .formLogin()
-                .loginPage("/ABDocs")
-                .permitAll()
-            .and()
             .logout().invalidateHttpSession(true).deleteCookies("JSESSIONID")
                 .clearAuthentication(true).permitAll()
             .and()
@@ -60,7 +56,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .expiredUrl("/ABDocs?expiredsession")
                 .maxSessionsPreventsLogin(false)
             .and().disable();
-            //.csrf().disable();
 
         http.headers()
         .httpStrictTransportSecurity()
